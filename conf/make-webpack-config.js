@@ -10,8 +10,6 @@ function extractForProduction(loaders) {
 }
 
 module.exports = function(options) {
-  options.lint = fs.existsSync(path.resolve(__dirname, '..', '.eslintrc')) && options.lint !== false;
-
   var localIdentName = options.production ? '[hash:base64]' : '[path]-[local]-[hash:base64:5]';
   var cssLoaders = 'style!css?module&localIdentName=' + localIdentName + '!postcss?browsers=last 2 versions';
   var scssLoaders = cssLoaders + '!sass';
@@ -39,13 +37,6 @@ module.exports = function(options) {
       filename: options.production ? 'app.[hash].js' : 'app.js',
     },
     module: {
-      preLoaders: options.lint ? [
-        {
-          test: /\.js$/,
-          exclude: /node_modules/,
-          loader: 'eslint',
-        },
-      ] : [],
       loaders: [
         {
           test: /\.js$/,
