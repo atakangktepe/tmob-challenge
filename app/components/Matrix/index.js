@@ -18,7 +18,7 @@ const Matrix = React.createClass({
               <div
                 className={styles.matrix__item + " " + (text === " " || text === undefined ? "empty" : "fill")}
                 key={i} >
-                {text === " " || text === undefined ? "boşluk" : text}
+                {text === " " || text === undefined ? "-" : text}
               </div>
             )
           })}

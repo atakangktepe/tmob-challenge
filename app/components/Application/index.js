@@ -15,9 +15,14 @@ class Application extends Component {
   }
 
   handleChange(e) {
-    this.setState({
-      text: e.target.value
-    });
+    if (e.target.value.length > 25) {
+      e.preventDefault();
+      e.stopPropagation();
+    } else {
+      this.setState({
+        text: e.target.value
+      });
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -44,7 +49,7 @@ class Application extends Component {
               })}
             </div>
 
-            <input type="text" onChange={this.handleChange}/>
+            <input type="text" className={styles.matrix_input} placeholder="Karakterler" onChange={this.handleChange} maxLength="25" />
           </main>
         </div>
       </div>
