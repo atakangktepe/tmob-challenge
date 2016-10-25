@@ -7,25 +7,42 @@ class Application extends Component {
   constructor(props) {
     super(props);
 
+    // Binding functions
     this.handleChange = this.handleChange.bind(this);
+    this.resetState = this.resetState.bind(this);
 
+    // Initial States
     this.state = {
       text: ""
     }
   }
 
+  // Handlings input changes
   handleChange(e) {
+
+    // If input value longer than 25 prevent typing to the input
     if (e.target.value.length > 25) {
       e.preventDefault();
       e.stopPropagation();
     } else {
+
+      // Else set state to value
       this.setState({
         text: e.target.value
       });
     }
   }
 
+  resetState() {
+    this.setState({
+      text: "",
+      slicedText: []
+    });
+  }
+
   componentDidUpdate(prevProps, prevState) {
+
+    // If text state is really updated, assign text into the array with slicing
     if (prevState.text !== this.state.text) {
       this.setState({
         slicedText: this.state.text.match(/.{1,5}/g)
@@ -42,14 +59,20 @@ class Application extends Component {
 
           <main className={styles.body}>
             <div className={styles.matrix}>
-              {[...Array(5)].map((x, i) => {
-                return (
-                  <Matrix key={i} startPoint={(i * 5) + 1} row={i} text={this.state.slicedText} />
-                )
-              })}
+              {
+                // For loop as table row length
+                [...Array(5)].map((x, i) => {
+                  return (
+                    <Matrix key={i} startPoint={(i * 5) + 1} row={i} text={this.state.slicedText} />
+                  )
+                })
+              }
             </div>
 
-            <input type="text" className={styles.matrix_input} placeholder="Karakterler" onChange={this.handleChange} maxLength="25" />
+            <input type="text" className={styles.matrix_input} placeholder="Karakterler" value={this.state.text} onChange={this.handleChange} maxLength="25" />
+            <button onClick={this.resetState} className={styles.reset_state}>
+              Sıfırla
+            </button>
           </main>
         </div>
       </div>
