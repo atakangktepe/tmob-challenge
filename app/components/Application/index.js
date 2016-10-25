@@ -17,7 +17,7 @@ class Application extends Component {
   handleChange(e) {
     this.setState({
       text: e.target.value
-    })
+    });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -26,10 +26,6 @@ class Application extends Component {
         slicedText: this.state.text.match(/.{1,5}/g)
       });
     }
-  }
-
-  componentWillUpdate(n, s) {
-    console.log("s.slicedText", s.slicedText);
   }
 
   render() {
@@ -43,7 +39,7 @@ class Application extends Component {
             <div className={styles.matrix}>
               {[...Array(5)].map((x, i) => {
                 return (
-                  <Matrix key={i} row={(i * 5) + 1} />
+                  <Matrix key={i} startPoint={(i * 5) + 1} row={i} text={this.state.slicedText} />
                 )
               })}
             </div>

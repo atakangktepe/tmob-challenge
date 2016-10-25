@@ -1,16 +1,22 @@
 import React from 'react';
 import styles from './style';
 
-const Matix = React.createClass({
+const Matrix = React.createClass({
   render() {
+
       return (
         <div className={styles.matrix__row}>
           {[...Array(5)].map((x, i) => {
-            let column = this.props.row + i;
+            let column = this.props.startPoint + i;
+            let text;
+
+            if (this.props.text && this.props.text[this.props.row]) {
+              text = this.props.text[this.props.row][i];
+            }
 
             return (
               <div className={styles.matrix__item} key={i}>
-                {column}
+                {text === " " ? "boşluk" : text}
               </div>
             )
           })}
@@ -19,4 +25,4 @@ const Matix = React.createClass({
   }
 });
 
-export default Matix;
+export default Matrix;
