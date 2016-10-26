@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Header from '../Header';
 import Matrix from '../Matrix';
 import styles from './style';
 
@@ -81,7 +80,7 @@ class Application extends Component {
               </div>
             </div>
 
-            <input type="text" className={styles.matrix_input} placeholder="Karakterler" value={this.state.text} onChange={this.handleChange} />
+            <input type="text" className={styles.matrix_input} placeholder="Karakterler" value={this.state.text} onChange={this.handleChange} maxLength="26" />
 
             <button onClick={this.resetState} className={styles.reset_state}>
               Sıfırla
