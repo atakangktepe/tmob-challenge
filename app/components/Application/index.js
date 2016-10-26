@@ -13,7 +13,9 @@ class Application extends Component {
 
     // Initial States
     this.state = {
-      text: ""
+      text: "",
+      progress: 0,
+      done: false
     }
   }
 
@@ -21,14 +23,18 @@ class Application extends Component {
   handleChange(e) {
 
     // If input value longer than 25 prevent typing to the input
-    if (e.target.value.length > 25) {
+    if (e.target.value.length == 26) {
+      this.setState({
+        done: true
+      });
       e.preventDefault();
       e.stopPropagation();
     } else {
 
       // Else set state to value
       this.setState({
-        text: e.target.value
+        text: e.target.value,
+        done: false
       });
     }
   }
@@ -36,7 +42,8 @@ class Application extends Component {
   resetState() {
     this.setState({
       text: "",
-      slicedText: []
+      slicedText: [],
+      done: false
     });
   }
 
@@ -45,7 +52,8 @@ class Application extends Component {
     // If text state is really updated, assign text into the array with slicing
     if (prevState.text !== this.state.text) {
       this.setState({
-        slicedText: this.state.text.match(/.{1,5}/g)
+        slicedText: this.state.text.match(/.{1,5}/g),
+        progress: this.state.text.length / 0.25
       });
     }
   }
@@ -55,10 +63,8 @@ class Application extends Component {
     return (
       <div className={styles.main}>
         <div className={styles.wrap}>
-          <Header />
-
           <main className={styles.body}>
-            <div className={styles.matrix}>
+            <div className={styles.matrix + " " + (this.state.done ? "done" : "")}>
               {
                 // For loop as table row length
                 [...Array(5)].map((x, i) => {
@@ -69,7 +75,14 @@ class Application extends Component {
               }
             </div>
 
-            <input type="text" className={styles.matrix_input} placeholder="Karakterler" value={this.state.text} onChange={this.handleChange} maxLength="25" />
+            <div className={styles.progress_parent}>
+              <div className={styles.progress} style={{width: this.state.progress + "%"}}>
+                {this.state.progress}%
+              </div>
+            </div>
+
+            <input type="text" className={styles.matrix_input} placeholder="Karakterler" value={this.state.text} onChange={this.handleChange} />
+
             <button onClick={this.resetState} className={styles.reset_state}>
               Sıfırla
             </button>
